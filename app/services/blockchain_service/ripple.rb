@@ -48,6 +48,11 @@ module BlockchainService
         payment_addresses_where(address: address) do |payment_address|
           deposit_txs = client.build_transaction(tx: tx, currency: payment_address.currency)
           deposit_txs.fetch(:entries).each_with_index do |entry, index|
+            if entry[:amount] <= payment_address.currency.min_deposit_amount
+              # If deposit amount smaller then currency min deposit amount
+              # TODO: Add behavior to this condition
+              next
+            end
             deposits << {
               txid:           deposit_txs[:id],
               address:        address,

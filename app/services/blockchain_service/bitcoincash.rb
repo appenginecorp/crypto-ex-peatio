@@ -20,6 +20,11 @@ module BlockchainService
           deposit_txs = client.build_transaction(txn, block_id, payment_address.address)
 
           deposit_txs.fetch(:entries).each_with_index do |entry, i|
+            if entry[:amount] <= payment_address.currency.min_deposit_amount
+              # If deposit amount smaller then currency min deposit amount
+              # TODO: Add behavior to this condition
+              next
+            end
             deposits << { txid:           deposit_txs[:id],
                           address:        entry[:address],
                           amount:         entry[:amount],
