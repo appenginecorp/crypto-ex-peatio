@@ -1,0 +1,8 @@
+---
+apiVersion: ambassador/v0
+kind: Mapping
+name: peatio_mapping
+host: localhost:8080
+host_rewrite: localhost:3000
+prefix: /
+service: peatio.local:3000

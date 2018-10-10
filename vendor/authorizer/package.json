@@ -1,0 +1,20 @@
+{
+  "name": "peatio-devel-auth",
+  "version": "1.1.1",
+  "description": "Auth Server for Peatio development environment",
+  "author": {
+    "name": "Dima Koval",
+    "email": "dkoval@heliostech.fr"
+  },
+  "license": "MIT",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.15.3",
+    "express-basic-auth": "^1.1.1",
+    "express-request-id": "^1.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rubykube/peatio-devel-auth"
+  }
+}

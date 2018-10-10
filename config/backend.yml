@@ -25,6 +25,29 @@ services:
     ports:
       - "5672:5672"
 
+  auth:
+    build: ../vendor/authorizer
+    ports:
+      - "8005:8005"
+
+  gateway:
+    image: quay.io/datawire/ambassador:0.40.0
+    ports:
+      - "8080:80"
+    depends_on:
+      - auth
+    volumes:
+      - ./gateway:/ambassador/ambassador-config/:ro
+    entrypoint:
+      - sh
+      - -exc
+      - |
+        # Allow accessing host's 0.0.0.0 so we can connect to a local peatio
+        # from the gateway container
+        ip -4 route list match 0/0 | awk '{print $$3" peatio.local"}' >> /etc/hosts
+        # Continue with the default entrypoint
+        ./entrypoint.sh
+
 volumes:
   db_data:
   rabbitmq_data:
